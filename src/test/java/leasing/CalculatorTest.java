@@ -19,7 +19,7 @@ public class CalculatorTest {
     @BeforeAll
     public void preConditionTestClassLevel() {
         webDriverFactory.startWebDriver(pathToSeleniumExe, urlToOpen);
-        this.leasingPage = new LeasingPage(webDriverFactory.getDriver(), webDriverFactory.getDriverWait());
+        leasingPage = new LeasingPage(webDriverFactory.getDriver(), webDriverFactory.getDriverWait());
         leasingPage.acceptCookiesAndSwitchToIframe();
     }
 

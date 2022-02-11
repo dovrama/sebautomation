@@ -14,7 +14,7 @@ public class LeasingPage {
 
     public LeasingPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
-        this.elementHelpers = new ElementHelpers(driver, wait);
+        elementHelpers = new ElementHelpers(driver, wait);
     }
 
     public void acceptCookiesAndSwitchToIframe() {

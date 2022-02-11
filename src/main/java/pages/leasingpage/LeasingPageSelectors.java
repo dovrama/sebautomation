@@ -12,8 +12,8 @@ public class LeasingPageSelectors {
         return getLabelSelector(id)+"/../following-sibling::div/input";
     }
 
-    protected static String getSelectSelector(String textOfLabel) {
-        return getLabelSelector(textOfLabel)+"/../following-sibling::div//select";
+    protected static String getSelectSelector(String id) {
+        return getLabelSelector(id)+"/../following-sibling::div//select";
     }
 
     protected static String getResultValueSelector(String id) {
