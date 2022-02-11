@@ -11,6 +11,11 @@ public class WebDriverFactory {
 
     private WebDriver driver;
     private WebDriverWait wait;
+    private ElementHelpers elementHelpers;
+
+    public WebDriverFactory(String pathToChromedriver, String urlToOpen) {
+        startWebDriver(pathToChromedriver, urlToOpen);
+    }
 
     private void startChromeDriver(String pathSeleniumDriverExe) {
         System.setProperty("webdriver.chrome.driver", pathSeleniumDriverExe);
@@ -22,9 +27,10 @@ public class WebDriverFactory {
         driver = new ChromeDriver(options);
     }
 
-    public void startWebDriver(String pathSeleniumDriverExe, String webSiteUrl) {
+    private void startWebDriver(String pathSeleniumDriverExe, String webSiteUrl) {
         startChromeDriver(pathSeleniumDriverExe);
-        setDriverWait();
+        initializeDriverWait();
+        initializeElementHelpers();
         goToUrl(webSiteUrl);
     }
 
@@ -41,12 +47,15 @@ public class WebDriverFactory {
         return driver;
     }
 
-    public void setDriverWait() {
+    private void initializeDriverWait() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    public WebDriverWait getDriverWait() {
-        return wait;
+    private void initializeElementHelpers() {
+        elementHelpers = new ElementHelpers(driver, wait);
     }
 
+    public ElementHelpers getElementHelpers() {
+        return elementHelpers;
+    }
 }

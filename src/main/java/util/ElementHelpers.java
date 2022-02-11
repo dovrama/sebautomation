@@ -12,7 +12,7 @@ public class ElementHelpers {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    public ElementHelpers(WebDriver driver, WebDriverWait wait) {
+    protected ElementHelpers(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
     }

@@ -1,4 +1,4 @@
-package leasing;
+package pages.leasingpage;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
@@ -11,16 +11,15 @@ import static configproperties.DriverProperties.pathToSeleniumExe;
 import static configproperties.DriverProperties.urlToOpen;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CalculatorTest {
+public class LeasingPageTest {
 
-    private WebDriverFactory webDriverFactory = new WebDriverFactory();
+    private WebDriverFactory webDriverFactory;
     private LeasingPage leasingPage;
 
     @BeforeAll
     public void preConditionTestClassLevel() {
-        webDriverFactory.startWebDriver(pathToSeleniumExe, urlToOpen);
-        leasingPage = new LeasingPage(webDriverFactory.getDriver(), webDriverFactory.getDriverWait());
-        leasingPage.acceptCookiesAndSwitchToIframe();
+        webDriverFactory = new WebDriverFactory(pathToSeleniumExe, urlToOpen);
+        leasingPage = new LeasingPage(webDriverFactory.getDriver(), webDriverFactory.getElementHelpers());
     }
 
     @AfterAll
