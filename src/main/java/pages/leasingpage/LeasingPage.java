@@ -3,28 +3,25 @@ package pages.leasingpage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import util.ElementHelpers;
+import factory.ElementOperations;
+import java.time.Duration;
 
 import static pages.leasingpage.LeasingPageSelectors.*;
 
-public class LeasingPage {
+public class LeasingPage extends ElementOperations {
 
-    private WebDriver driver;
-    private ElementHelpers elementHelpers;
-
-    public LeasingPage(WebDriver driver, ElementHelpers elementHelpers) {
-        this.driver = driver;
-        this.elementHelpers = elementHelpers;
+    public LeasingPage(WebDriver driver) {
+        super(driver, new WebDriverWait(driver, Duration.ofSeconds(10)));
         acceptCookiesAndSwitchToIframe();
     }
 
     private void acceptCookiesAndSwitchToIframe() {
-        elementHelpers.clickElement(acceptCookiesButtonXpathSelector);
-        driver.switchTo().frame("calculator-frame-06");
+        clickElement(acceptCookiesButtonXpathSelector);
+        switchToIframe("calculator-frame-06");
     }
 
     private void assertLabel(String expectedValue, String labelId) {
-        elementHelpers.assertElementValue(expectedValue, getLabelSelector(labelId));
+        assertElementValue(expectedValue, getLabelSelector(labelId));
     }
 
     public void assertSumLabel(String expectedLabel) {
@@ -48,7 +45,7 @@ public class LeasingPage {
     }
 
     private void assertResultLabel(String expectedValue, String labelId) {
-        elementHelpers.assertElementValue(expectedValue, getResultLabelSelector(labelId));
+        assertElementValue(expectedValue, getResultLabelSelector(labelId));
     }
 
     public void assertMonthlyLabel(String expectedLabel){
@@ -64,7 +61,7 @@ public class LeasingPage {
     }
 
     private void assertResultValue(String expectedValue, String labelId){
-        elementHelpers.assertElementValue(expectedValue, getResultValueSelector(labelId));
+        assertElementValue(expectedValue, getResultValueSelector(labelId));
     }
 
     public void assertMonthlyPaymentValue(String expectedValue) {
@@ -79,35 +76,36 @@ public class LeasingPage {
         assertResultValue(expectedValue, "maksa");
     }
 
-    public void assertCalculationResult(String monthlyPayment, String commision, String payment) {
+    public LeasingPage assertCalculationResult(String monthlyPayment, String commision, String payment) {
         assertMonthlyPaymentValue(monthlyPayment);
         assertCommisionValue(commision);
         assertPaymentValue(payment);
+        return this;
     }
 
     private void clickButton(String buttonText){
-        elementHelpers.clickElement(getButtonSelector(buttonText));
+        clickElement(getButtonSelector(buttonText));
     }
 
     private void clearInput(String labelId){
-        elementHelpers.clearValue(getInputSelector(labelId));
+        clearValue(getInputSelector(labelId));
     }
 
     private void checkIfElementExistsOnScreen(String labelId) {
-        elementHelpers.getElement(getInvalidInputSelector(labelId));
+        getElement(getInvalidInputSelector(labelId));
     }
 
     private void inputValue(String input, String labelId){
-        elementHelpers.enterValue(getInputSelector(labelId), input);
+        enterValue(getInputSelector(labelId), input);
     }
 
     private void selectDropdown(String labelId, int optionFromTop) {
-        Select dropdown = new Select(elementHelpers.getElement(getSelectSelector(labelId)));
+        Select dropdown = new Select(getElement(getSelectSelector(labelId)));
         dropdown.selectByIndex(optionFromTop);
     }
 
     private void assertInputValidationText(String expectedMessage, String labelId) {
-        elementHelpers.assertElementValue(expectedMessage, getInvalidInputSelector(labelId));
+        assertElementValue(expectedMessage, getInvalidInputSelector(labelId));
     }
 
     public void assertSumInputValidationMessage(String input, String validationMessage) {
@@ -138,7 +136,7 @@ public class LeasingPage {
         assertInputValidation("rest");
     }
 
-    public void fillFormAndSubmit(String sum, String interest, int termOption, int downPaymentOption, String downPayment, String carValue) {
+    public LeasingPage fillFormAndSubmit(String sum, String interest, int termOption, int downPaymentOption, String downPayment, String carValue) {
         inputValue(sum, "summa");
         inputValue(interest, "likme");
         selectDropdown("termins", termOption);
@@ -146,6 +144,7 @@ public class LeasingPage {
         inputValue(downPayment, "maksa");
         inputValue(carValue, "rest");
         clickButton("Skaičiuoti");
+        return this;
     }
 
 }

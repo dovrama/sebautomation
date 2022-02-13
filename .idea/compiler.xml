@@ -9,8 +9,5 @@
         <module name="POMTEST" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="POMTEST" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
